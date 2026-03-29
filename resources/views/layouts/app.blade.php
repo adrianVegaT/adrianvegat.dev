@@ -117,10 +117,19 @@
                         @endrole
 
                         <!-- User Dropdown -->
+                        @php
+                            $nameParts = explode(' ', auth()->user()->name);
+                            $initials = strtoupper(substr($nameParts[0], 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
+                        @endphp
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" class="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                                <img src="{{ auth()->user()->avatar_url }}" alt="{{ auth()->user()->name }}" class="w-8 h-8 rounded-full">
-                                <span>{{ auth()->user()->name }}</span>
+                                @if(auth()->user()->avatar)
+                                <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-8 h-8 rounded-full object-cover">
+                                @else
+                                <div class="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white text-xs font-semibold">
+                                    {{ $initials }}
+                                </div>
+                                @endif
                             </button>
 
                             <div x-show="open"
@@ -133,9 +142,6 @@
                                 x-transition:leave-end="opacity-0 scale-95"
                                 class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1"
                                 style="display: none;">
-                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    Perfil
-                                </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -144,13 +150,6 @@
                                 </form>
                             </div>
                         </div>
-                        @else
-                        <a href="{{ route('login') . '?intended=' . urlencode(url()->current()) }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                            Iniciar sesión
-                        </a>
-                        <a href="{{ route('register') . '?intended=' . urlencode(url()->current()) }}" class="ml-4 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
-                            Registrarse
-                        </a>
                         @endauth
                     </div>
 
@@ -216,22 +215,12 @@
                         Dashboard
                     </a>
                     @endrole
-                    <a href="{{ route('profile.edit') }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
-                        Perfil
-                    </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="block w-full text-left text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
                             Cerrar sesión
                         </button>
                     </form>
-                    @else
-                    <a href="{{ route('login') . '?intended=' . urlencode(url()->current()) }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
-                        Iniciar sesión
-                    </a>
-                    <a href="{{ route('register') . '?intended=' . urlencode(url()->current()) }}" class="ml-4 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
-                        Registrarse
-                    </a>
                     @endauth
                 </div>
             </div>
