@@ -239,11 +239,7 @@
                     <div>
                         <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">Sobre mí</h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Desarrollador Full Stack con experiencia en PHP y Laravel, en transición activa hacia TypeScript y herramientas de inteligencia artificial.
-
-                            Llevo años trabajando en backend — bases de datos, APIs, configuración de servidores, despliegue — y en algún punto dejé de solo construir con tecnología para querer entender hacia dónde va. Ese cuestionamiento me llevó a analizar tendencias, revisar fundamentos y elegir una ruta deliberada: TypeScript como puente hacia la integración con IA.
-
-                            Este sitio es mi bitácora pública de ese proceso. Documento lo que aprendo, los marcos mentales que uso para tomar decisiones técnicas y los proyectos que construyo en el camino. No es un portfolio de logros terminados — es un registro en tiempo real del proceso de aprendizaje.
+                            Desarrollador Full Stack en transición de PHP a TypeScript e IA. Documento el proceso en público.
                         </p>
                     </div>
 
