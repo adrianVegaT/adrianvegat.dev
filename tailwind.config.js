@@ -14,6 +14,24 @@ export default {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        p: {
+                            marginTop: '0.6em',
+                            marginBottom: '0.6em',
+                        },
+                    },
+                },
+                lg: {
+                    css: {
+                        p: {
+                            marginTop: '0.6em',
+                            marginBottom: '0.6em',
+                        },
+                    },
+                },
+            },
             colors: {
                 primary: {
                     50: '#f0f9ff',
