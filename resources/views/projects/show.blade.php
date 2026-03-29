@@ -103,8 +103,8 @@
     <!-- Project Description -->
     <section class="py-12 bg-white dark:bg-gray-950">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="prose prose-lg dark:prose-invert max-w-none">
-                {!! nl2br(e($project->description)) !!}
+            <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-gray-400 prose-a:text-primary-600 dark:prose-a:text-primary-500 prose-strong:text-gray-900 dark:prose-strong:text-white prose-code:text-gray-900 dark:prose-code:text-white prose-pre:bg-gray-900 dark:prose-pre:bg-gray-800">
+                {!! $project->description !!}
             </div>
         </div>
     </section>
