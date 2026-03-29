@@ -145,10 +145,10 @@
                             </div>
                         </div>
                         @else
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                        <a href="{{ route('login') . '?intended=' . urlencode(url()->current()) }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                             Iniciar sesión
                         </a>
-                        <a href="{{ route('register') }}" class="ml-4 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
+                        <a href="{{ route('register') . '?intended=' . urlencode(url()->current()) }}" class="ml-4 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
                             Registrarse
                         </a>
                         @endauth
@@ -226,10 +226,10 @@
                         </button>
                     </form>
                     @else
-                    <a href="{{ route('login') }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
+                    <a href="{{ route('login') . '?intended=' . urlencode(url()->current()) }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
                         Iniciar sesión
                     </a>
-                    <a href="{{ route('register') }}" class="ml-4 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
+                    <a href="{{ route('register') . '?intended=' . urlencode(url()->current()) }}" class="ml-4 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
                         Registrarse
                     </a>
                     @endauth
