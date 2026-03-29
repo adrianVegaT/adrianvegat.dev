@@ -11,7 +11,7 @@
             <div class="max-w-3xl">
                 <div class="mb-6">
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-50 dark:bg-primary-950 text-primary-700 dark:text-primary-400 border border-primary-200 dark:border-primary-800">
-                        Full Stack Developer
+                        Full Stack Developer → TypeScript & IA
                     </span>
                 </div>
 
@@ -21,7 +21,7 @@
                 </h1>
 
                 <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                    Desarrollo soluciones tecnológicas innovadoras enfocadas en desarrollo web, inteligencia artificial y robótica.
+                    Desarrollador backend con base en PHP, en transición activa hacia TypeScript y herramientas de IA. Este sitio es el registro público de ese proceso: decisiones, aprendizajes y proyectos en tiempo real.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -213,14 +213,14 @@
     <section class="py-16 sm:py-20 bg-gradient-to-br from-primary-600 to-primary-700 dark:from-primary-700 dark:to-primary-800">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-                ¿Tienes un proyecto en mente?
+                ¿Estás en un proceso similar?
             </h2>
             <p class="text-lg sm:text-xl text-primary-50 dark:text-primary-100 mb-8">
-                Estoy disponible para nuevos proyectos y colaboraciones
+                Si estás transitando de un stack a otro, explorando IA o simplemente navegando el ruido de la industria, me interesa saber cómo lo estás viviendo.
             </p>
-            <a href="mailto:tu-email@ejemplo.com"
+            <a href="mailto:adrianvegat@gmail.com"
                 class="inline-flex items-center px-6 py-3 text-base font-medium rounded-lg text-primary-700 dark:text-primary-600 bg-white hover:bg-primary-50 transition-colors duration-200 shadow-sm">
-                Contáctame
+                Escríbeme
                 <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
