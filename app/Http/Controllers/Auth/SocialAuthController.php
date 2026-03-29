@@ -22,7 +22,17 @@ class SocialAuthController extends Controller
             
             \Log::info("Redirigiendo a {$provider} para autenticación");
             
-            return Socialite::driver($provider)->redirect();
+            if ($intended = request()->query('intended')) {
+                session(['url.intended' => $intended]);
+            }
+
+            $driver = Socialite::driver($provider);
+
+            if ($provider === 'github') {
+                $driver = $driver->scopes(['user:email'])->stateless();
+            }
+
+            return $driver->redirect();
             
         } catch (Exception $e) {
             \Log::error("Error en redirect de {$provider}: " . $e->getMessage());
@@ -43,7 +53,13 @@ class SocialAuthController extends Controller
             \Log::info("Callback recibido de {$provider}");
             \Log::info("Request params: ", request()->all());
 
-            $socialUser = Socialite::driver($provider)->user();
+            $driver = Socialite::driver($provider);
+
+            if ($provider === 'github') {
+                $driver = $driver->stateless();
+            }
+
+            $socialUser = $driver->user();
             
             \Log::info("Usuario obtenido de {$provider}", [
                 'id' => $socialUser->getId(),
@@ -61,11 +77,11 @@ class SocialAuthController extends Controller
 
             // Redirigir según el rol del usuario
             if ($user->hasRole(['admin', 'author'])) {
-                return redirect()->route('admin.dashboard')
+                return redirect()->intended(route('admin.dashboard'))
                     ->with('success', '¡Bienvenido de nuevo, ' . $user->name . '!');
             }
 
-            return redirect()->route('home')
+            return redirect()->intended(route('home'))
                 ->with('success', '¡Bienvenido, ' . $user->name . '!');
 
         } catch (\Laravel\Socialite\Two\InvalidStateException $e) {
