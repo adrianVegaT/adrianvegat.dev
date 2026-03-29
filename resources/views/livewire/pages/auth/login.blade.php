@@ -46,6 +46,7 @@ new #[Layout('layouts.guest')] class extends Component
             Continuar con Google
         </a>
 
+        {{-- GitHub OAuth - deshabilitado temporalmente
         <a href="{{ route('social.redirect', 'github') . (request()->query('intended') ? '?intended=' . urlencode(request()->query('intended')) : '') }}"
             class="w-full flex items-center justify-center px-4 py-2 border border-gray-800 rounded-md shadow-sm bg-gray-800 text-sm font-medium text-white hover:bg-gray-700">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -53,6 +54,7 @@ new #[Layout('layouts.guest')] class extends Component
             </svg>
             Continuar con GitHub
         </a>
+        --}}
     </div>
 
     <div class="relative mb-6">

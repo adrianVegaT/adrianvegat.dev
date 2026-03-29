@@ -77,6 +77,7 @@
                 Continuar con Google
             </a>
 
+            {{-- GitHub OAuth - deshabilitado temporalmente
             <a href="{{ route('social.redirect', 'github') . '?intended=' . urlencode(url()->current()) }}"
                 class="w-full flex items-center justify-center px-4 py-2 border border-gray-800 rounded-md shadow-sm bg-gray-800 text-sm font-medium text-white hover:bg-gray-700 transition-colors">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -84,6 +85,7 @@
                 </svg>
                 Continuar con GitHub
             </a>
+            --}}
         </div>
         <p class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
             <a href="{{ route('login') . '?intended=' . urlencode(url()->current()) }}" class="text-primary-600 dark:text-primary-400 hover:underline">
