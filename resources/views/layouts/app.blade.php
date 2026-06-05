@@ -88,7 +88,7 @@
                         </a>
 
                         <!-- Theme Switcher -->
-                        <button
+                        <!-- <button
                             @click="
                                 theme = theme === 'dark' ? 'light' : 'dark';
                                 localStorage.setItem('theme', theme);
@@ -102,7 +102,7 @@
                             title="Cambiar tema">
                             <span x-show="theme === 'dark'">theme:dark</span>
                             <span x-show="theme === 'light'" style="display:none;">theme:light</span>
-                        </button>
+                        </button> -->
 
                         @auth
                         @role('admin|author')
