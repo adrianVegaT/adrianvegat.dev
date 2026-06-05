@@ -2,23 +2,19 @@
 
 @php
     $sizes = [
-        'sm' => 'text-lg',
-        'default' => 'text-2xl',
-        'lg' => 'text-3xl',
-        'xl' => 'text-4xl',
+        'sm' => 'text-sm',
+        'default' => 'text-lg',
+        'lg' => 'text-xl',
+        'xl' => 'text-2xl',
     ];
-    
+
     $sizeClass = $sizes[$size] ?? $sizes['default'];
 @endphp
 
-<div {{ $attributes->merge(['class' => 'flex items-center gap-3']) }}>
-    <x-logo :size="$size === 'sm' ? 'sm' : ($size === 'lg' ? 'lg' : 'default')" />
-    <div class="flex flex-col">
-        <span class="{{ $sizeClass }} font-bold bg-gradient-to-r from-primary-600 to-violet-600 bg-clip-text text-transparent">
-            Adrian Vega
-        </span>
-        <span class="text-xs text-gray-600 dark:text-gray-400 -mt-1">
-            Full Stack Developer
-        </span>
-    </div>
+<div {{ $attributes->merge(['class' => 'flex items-center gap-2 font-mono']) }}>
+    <span class="text-gray-400 dark:text-terminal-dim">~$</span>
+    <span class="{{ $sizeClass }} font-semibold text-primary-600 dark:text-primary-500">
+        adrian_vega
+    </span>
+    <span class="cursor-blink dark-cursor {{ $size === 'sm' ? 'h-4' : '' }}"></span>
 </div>

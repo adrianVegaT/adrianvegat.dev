@@ -13,6 +13,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                mono: ['JetBrains Mono', ...defaultTheme.fontFamily.mono],
             },
             typography: {
                 DEFAULT: {
@@ -45,6 +46,15 @@ export default {
                     800: '#075985',
                     900: '#0c4a6e',
                     950: '#082f49',
+                },
+                terminal: {
+                    bg: '#0a0a0a',
+                    card: '#111111',
+                    elevated: '#1a1a1a',
+                    border: '#222222',
+                    'border-bright': '#333333',
+                    muted: '#737373',
+                    dim: '#525252',
                 },
             },
         },
