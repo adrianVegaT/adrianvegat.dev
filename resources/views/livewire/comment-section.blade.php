@@ -1,7 +1,8 @@
 <div>
-    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">
-        Comentarios ({{ $post->comments->count() }})
-    </h2>
+    <div class="mb-8">
+        <p class="font-mono text-xs text-terminal-dim dark:text-terminal-dim uppercase tracking-wider mb-1"><span class="text-primary-600 dark:text-primary-500">#</span> comentarios</p>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Comentarios ({{ $post->comments->count() }})</h2>
+    </div>
 
     @if (session()->has('success'))
     <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
@@ -14,8 +15,8 @@
     <div class="mb-8">
         <form wire:submit.prevent="submitComment" class="space-y-4">
             @if($replyingToCommentId)
-            <div class="flex items-center justify-between p-3 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg">
-                <span class="text-sm text-primary-700 dark:text-primary-400">
+            <div class="flex items-center justify-between p-3 bg-primary-50 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/20 rounded-lg">
+                <span class="font-mono text-xs text-primary-700 dark:text-primary-400">
                     Respondiendo a comentario...
                 </span>
                 <button type="button" wire:click="cancelReply" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
@@ -27,14 +28,14 @@
             @endif
 
             <div>
-                <label for="comment" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label for="comment" class="block font-mono text-xs text-terminal-dim dark:text-terminal-dim mb-2">
                     {{ $replyingToCommentId ? 'Tu respuesta' : 'Escribe un comentario' }}
                 </label>
                 <textarea
                     wire:model="comment"
                     id="comment"
                     rows="4"
-                    class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+                    class="w-full px-4 py-3 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-terminal-muted dark:placeholder-terminal-dim resize-none"
                     placeholder="Comparte tu opinión..."></textarea>
                 @error('comment')
                 <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -46,13 +47,13 @@
                 <button
                     type="button"
                     wire:click="cancelReply"
-                    class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    class="px-4 py-2 font-mono text-xs text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-card border border-terminal-border dark:border-terminal-border rounded-md hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
                     Cancelar
                 </button>
                 @endif
                 <button
                     type="submit"
-                    class="px-6 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="px-6 py-2 font-mono text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     wire:loading.attr="disabled">
                     <span wire:loading.remove>{{ $replyingToCommentId ? 'Responder' : 'Comentar' }}</span>
                     <span wire:loading>Publicando...</span>
@@ -61,13 +62,13 @@
         </form>
     </div>
     @else
-    <div class="mb-8 p-6 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg">
-        <p class="text-gray-600 dark:text-gray-400 mb-4 text-center">
+    <div class="mb-8 p-6 bg-gray-50 dark:bg-terminal-card border border-gray-200 dark:border-terminal-border rounded-lg">
+        <p class="text-terminal-muted dark:text-terminal-muted mb-4 text-center font-mono text-sm">
             Inicia sesión para dejar un comentario
         </p>
         <div class="space-y-3">
             <a href="{{ route('social.redirect', 'google') . '?intended=' . urlencode(url()->current()) }}"
-                class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-terminal-border rounded-md bg-white dark:bg-terminal-card font-mono text-xs text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
                 <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -87,8 +88,8 @@
             </a>
             --}}
         </div>
-        <p class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
-            <a href="{{ route('login') . '?intended=' . urlencode(url()->current()) }}" class="text-primary-600 dark:text-primary-400 hover:underline">
+        <p class="mt-4 text-center font-mono text-xs text-terminal-muted dark:text-terminal-muted">
+            <a href="{{ route('login') . '?intended=' . urlencode(url()->current()) }}" class="text-primary-600 dark:text-primary-500 hover:underline">
                 Entrar con email
             </a>
         </p>
@@ -96,9 +97,9 @@
     @endauth
 
     <!-- Comments List -->
-    <div class="space-y-6">
+    <div class="space-y-4">
         @forelse($comments as $comment)
-        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6" id="comment-{{ $comment->id }}">
+        <div class="bg-white dark:bg-terminal-card border border-gray-200 dark:border-terminal-border rounded-lg p-5" id="comment-{{ $comment->id }}">
             <!-- Comment Header -->
             <div class="flex items-start justify-between mb-4">
                 <div class="flex items-center space-x-3">
@@ -126,17 +127,17 @@
                     <div x-show="open"
                         @click.away="open = false"
                         x-transition
-                        class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-10"
+                        class="absolute right-0 mt-2 w-48 bg-white dark:bg-terminal-card rounded-lg shadow-lg border border-gray-200 dark:border-terminal-border py-1 z-10"
                         style="display: none;">
                         <button
                             wire:click="editComment({{ $comment->id }})"
-                            class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            class="w-full text-left px-4 py-2 font-mono text-xs text-terminal-muted dark:text-terminal-muted hover:bg-gray-100 dark:hover:bg-terminal-elevated">
                             Editar
                         </button>
                         <button
                             wire:click="deleteComment({{ $comment->id }})"
                             wire:confirm="¿Estás seguro de eliminar este comentario?"
-                            class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            class="w-full text-left px-4 py-2 font-mono text-xs text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-terminal-elevated">
                             Eliminar
                         </button>
                     </div>
@@ -152,19 +153,19 @@
                     <textarea
                         wire:model="editingContent"
                         rows="4"
-                        class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white resize-none"></textarea>
+                        class="w-full px-4 py-3 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white resize-none"></textarea>
                     @error('editingContent')
                     <p class="text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                     <div class="flex justify-end gap-3">
                         <button
                             wire:click="cancelEdit"
-                            class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            class="px-4 py-2 font-mono text-xs text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-card border border-terminal-border dark:border-terminal-border rounded-md hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
                             Cancelar
                         </button>
                         <button
                             wire:click="updateComment"
-                            class="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-lg transition-colors">
+                            class="px-4 py-2 font-mono text-xs text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-md transition-colors">
                             Guardar
                         </button>
                     </div>
@@ -180,7 +181,7 @@
             <div class="flex items-center space-x-4">
                 <button
                     wire:click="replyTo({{ $comment->id }})"
-                    class="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
+                    class="font-mono text-xs text-primary-600 dark:text-primary-500 hover:text-primary-700 dark:hover:text-primary-300">
                     Responder
                 </button>
             </div>
@@ -189,9 +190,9 @@
 
             <!-- Replies -->
             @if($comment->replies->count() > 0)
-            <div class="mt-6 ml-8 space-y-6 border-l-2 border-gray-200 dark:border-gray-800 pl-6">
+            <div class="mt-6 ml-8 space-y-4 border-l-2 border-gray-200 dark:border-terminal-border pl-6">
                 @foreach($comment->replies as $reply)
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <div class="bg-gray-50 dark:bg-terminal-elevated rounded-lg p-4">
                     <!-- Reply Header -->
                     <div class="flex items-start justify-between mb-3">
                         <div class="flex items-center space-x-3">
@@ -219,17 +220,17 @@
                             <div x-show="open"
                                 @click.away="open = false"
                                 x-transition
-                                class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-10"
+                                class="absolute right-0 mt-2 w-48 bg-white dark:bg-terminal-card rounded-lg shadow-lg border border-gray-200 dark:border-terminal-border py-1 z-10"
                                 style="display: none;">
                                 <button
                                     wire:click="editComment({{ $reply->id }})"
-                                    class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    class="w-full text-left px-4 py-2 font-mono text-xs text-terminal-muted dark:text-terminal-muted hover:bg-gray-100 dark:hover:bg-terminal-elevated">
                                     Editar
                                 </button>
                                 <button
                                     wire:click="deleteComment({{ $reply->id }})"
                                     wire:confirm="¿Estás seguro de eliminar esta respuesta?"
-                                    class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    class="w-full text-left px-4 py-2 font-mono text-xs text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-terminal-elevated">
                                     Eliminar
                                 </button>
                             </div>
@@ -244,16 +245,16 @@
                         <textarea
                             wire:model="editingContent"
                             rows="3"
-                            class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white text-sm resize-none"></textarea>
+                            class="w-full px-3 py-2 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white resize-none"></textarea>
                         <div class="flex justify-end gap-2">
                             <button
                                 wire:click="cancelEdit"
-                                class="px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                class="px-3 py-1.5 font-mono text-xs text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-card border border-terminal-border dark:border-terminal-border rounded-md hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
                                 Cancelar
                             </button>
                             <button
                                 wire:click="updateComment"
-                                class="px-3 py-1.5 text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-lg transition-colors">
+                                class="px-3 py-1.5 font-mono text-xs text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-md transition-colors">
                                 Guardar
                             </button>
                         </div>
@@ -267,12 +268,12 @@
             @endif
         </div>
         @empty
-        <div class="text-center py-12 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg">
-            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="text-center py-12 bg-white dark:bg-terminal-card border border-gray-200 dark:border-terminal-border rounded-lg">
+            <svg class="mx-auto h-10 w-10 text-terminal-muted dark:text-terminal-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No hay comentarios aún</h3>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Sé el primero en comentar</p>
+            <h3 class="mt-2 font-mono text-sm text-gray-900 dark:text-white">No hay comentarios aún</h3>
+            <p class="mt-1 font-mono text-xs text-terminal-muted dark:text-terminal-dim">Sé el primero en comentar</p>
         </div>
         @endforelse
     </div>

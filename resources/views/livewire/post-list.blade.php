@@ -1,31 +1,28 @@
 <div>
-    <!-- Filtros y búsqueda -->
     <div class="mb-8 space-y-4">
-        <!-- Buscador -->
         <div class="relative">
-            <input 
-                type="text" 
+            <input
+                type="text"
                 wire:model.live.debounce.300ms="search"
                 placeholder="Buscar artículos..."
-                class="w-full px-4 py-3 pl-11 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                class="w-full px-4 py-2.5 pl-10 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-terminal-muted dark:placeholder-terminal-dim"
             >
-            <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="absolute left-3 top-3 w-4 h-4 text-terminal-muted dark:text-terminal-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
         </div>
 
-        <!-- Filtro por categorías -->
         <div class="flex flex-wrap gap-2">
-            <button 
+            <button
                 wire:click="$set('selectedCategory', '')"
-                class="px-4 py-2 rounded-lg text-sm font-medium transition-colors {{ $selectedCategory === '' ? 'bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700' }}"
+                class="px-3 py-1.5 rounded text-[11px] font-mono font-medium transition-colors border {{ $selectedCategory === '' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-white dark:bg-terminal-card border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500' }}"
             >
                 Todos
             </button>
             @foreach($categories as $category)
-            <button 
+            <button
                 wire:click="$set('selectedCategory', '{{ $category->slug }}')"
-                class="px-4 py-2 rounded-lg text-sm font-medium transition-colors {{ $selectedCategory === $category->slug ? 'bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700' }}"
+                class="px-3 py-1.5 rounded text-[11px] font-mono font-medium transition-colors border {{ $selectedCategory === $category->slug ? 'bg-primary-600 border-primary-600 text-white' : 'bg-white dark:bg-terminal-card border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500' }}"
             >
                 {{ $category->name }}
             </button>
@@ -33,66 +30,48 @@
         </div>
     </div>
 
-    <!-- Lista de posts -->
-    <div class="space-y-6 mb-8">
-        @forelse($posts as $post)
-        <article class="group bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary-500 dark:hover:border-primary-500 transition-all duration-200 overflow-hidden">
-            <a href="{{ route('posts.show', $post->slug) }}" class="flex flex-col sm:flex-row">
-                @if($post->featured_image)
-                <div class="sm:w-72 aspect-video sm:aspect-auto overflow-hidden bg-gray-100 dark:bg-gray-800 flex-shrink-0">
-                    <img src="{{ Storage::url($post->featured_image) }}" 
-                         alt="{{ $post->title }}" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                </div>
-                @endif
+    <div class="space-y-px border border-gray-200 dark:border-terminal-border rounded-lg overflow-hidden bg-gray-200 dark:bg-terminal-border mb-8">
+        @forelse($posts as $index => $post)
+        <article class="group bg-white dark:bg-terminal-card hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
+            <a href="{{ route('posts.show', $post->slug) }}" class="flex items-center gap-4 sm:gap-6 px-4 sm:px-6 py-4 no-underline text-inherit">
+                <span class="font-mono text-sm text-terminal-dim dark:text-terminal-dim min-w-[28px]">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
 
-                <div class="p-6 flex-1">
-                    <div class="flex items-center gap-3 mb-3 text-sm text-gray-500 dark:text-gray-400">
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-base font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-500 transition-colors truncate">
+                        {{ $post->title }}
+                    </h3>
+                    <div class="flex items-center gap-3 mt-1 font-mono text-[11px] text-terminal-dim dark:text-terminal-dim">
                         <time datetime="{{ $post->published_at->toISOString() }}">
-                            {{ $post->published_at->format('d M Y') }}
+                            {{ $post->published_at->format('Y-m-d') }}
                         </time>
                         @if($post->reading_time)
-                        <span>·</span>
-                        <span>{{ $post->reading_time }} min lectura</span>
+                        <span>{{ $post->reading_time }} min</span>
                         @endif
                         @if($post->comments_count > 0)
-                        <span>·</span>
                         <span>{{ $post->comments_count }} comentarios</span>
                         @endif
                     </div>
-
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-500 transition-colors">
-                        {{ $post->title }}
-                    </h3>
-
-                    @if($post->excerpt)
-                    <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                        {{ $post->excerpt }}
-                    </p>
-                    @endif
-
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($post->categories as $category)
-                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                            {{ $category->name }}
-                        </span>
-                        @endforeach
-                    </div>
                 </div>
+
+                @if($post->categories->first())
+                <span class="hidden sm:inline px-2 py-0.5 font-mono text-[10px] rounded font-medium bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-400">
+                    {{ $post->categories->first()->name }}
+                </span>
+                @endif
+                <span class="font-mono text-terminal-dim dark:text-terminal-dim group-hover:text-primary-600 dark:group-hover:text-primary-500 group-hover:translate-x-1 transition-all">→</span>
             </a>
         </article>
         @empty
-        <div class="text-center py-12 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
-            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="text-center py-12 bg-white dark:bg-terminal-card">
+            <svg class="mx-auto h-10 w-10 text-terminal-muted dark:text-terminal-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No se encontraron artículos</h3>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Intenta con otros términos de búsqueda</p>
+            <h3 class="mt-2 font-mono text-sm text-gray-900 dark:text-white">No se encontraron artículos</h3>
+            <p class="mt-1 font-mono text-xs text-terminal-muted dark:text-terminal-dim">Intenta con otros términos de búsqueda</p>
         </div>
         @endforelse
     </div>
 
-    <!-- Paginación -->
     @if($posts->hasPages())
     <div class="mt-8">
         {{ $posts->links() }}
