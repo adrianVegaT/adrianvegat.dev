@@ -1,70 +1,123 @@
 <x-app-layout>
     <!-- Hero Section -->
     <section class="bg-white dark:bg-terminal-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-            <!-- Terminal Block -->
-            <div class="max-w-3xl rounded-lg border border-gray-200 dark:border-terminal-border overflow-hidden bg-gray-50 dark:bg-terminal-card">
-                <!-- Terminal Header -->
-                <div class="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-terminal-elevated border-b border-gray-200 dark:border-terminal-border">
-                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                    <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                    <span class="flex-1 text-center font-mono text-[11px] text-terminal-dim dark:text-terminal-dim">adrian@dev ~ about.sh</span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+            <!-- Two-column layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <!-- Left column: Terminal Block (spans 3/5) -->
+                <div class="lg:col-span-3">
+                    <div class="rounded-lg border border-gray-200 dark:border-terminal-border overflow-hidden bg-gray-50 dark:bg-terminal-card h-full">
+                        <!-- Terminal Header -->
+                        <div class="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-terminal-elevated border-b border-gray-200 dark:border-terminal-border">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                            <span class="flex-1 text-center font-mono text-[11px] text-terminal-dim dark:text-terminal-dim">adrian@dev ~ about.sh</span>
+                        </div>
+
+                        <!-- Terminal Body -->
+                        <div class="p-5 sm:p-7 font-mono text-sm leading-relaxed space-y-1">
+                            <div class="terminal-line">
+                                <span class="text-terminal-dim dark:text-terminal-dim italic">#!/bin/bash</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="text-terminal-dim dark:text-terminal-dim italic"># about.sh - Quién soy</span>
+                            </div>
+                            <div class="terminal-line">&nbsp;</div>
+                            <div class="terminal-line">
+                                <span class="text-primary-600 dark:text-primary-500">$</span> <span class="text-cyan-600 dark:text-cyan-400">echo</span> <span class="text-primary-600 dark:text-primary-400">"Hola, soy <span class="text-primary-600 dark:text-primary-500 font-semibold">Adrian Vega</span>"</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="text-terminal-muted dark:text-terminal-muted">Hola, soy Adrian Vega</span>
+                            </div>
+                            <div class="terminal-line">&nbsp;</div>
+                            <div class="terminal-line">
+                                <span class="text-primary-600 dark:text-primary-500">$</span> <span class="text-cyan-600 dark:text-cyan-400">cat</span> <span class="text-amber-600 dark:text-amber-400">--role</span> <span class="text-primary-600 dark:text-primary-400">"Full Stack Developer"</span> <span class="text-amber-600 dark:text-amber-400">--focus</span> <span class="text-primary-600 dark:text-primary-400">"TypeScript & IA"</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="text-terminal-muted dark:text-terminal-muted">Desarrollador backend con base en PHP, en transición activa hacia TypeScript y herramientas de IA. Este sitio es el registro público de ese proceso: decisiones, aprendizajes y proyectos en tiempo real.</span>
+                            </div>
+                            <div class="terminal-line">&nbsp;</div>
+                            <div class="terminal-line">
+                                <span class="text-primary-600 dark:text-primary-500">$</span> <span class="text-cyan-600 dark:text-cyan-400">ls</span> <span class="text-amber-600 dark:text-amber-400">./stack/</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Terminal Body -->
-                <div class="p-6 sm:p-8 font-mono text-sm leading-relaxed space-y-1">
-                    <div class="terminal-line">
-                        <span class="text-terminal-dim dark:text-terminal-dim italic">#!/bin/bash</span>
+                <!-- Right column: Dashboard panels (spans 2/5) -->
+                <div class="lg:col-span-2 flex flex-col gap-6">
+                    <!-- Actions panel -->
+                    <div class="rounded-lg border border-gray-200 dark:border-terminal-border overflow-hidden bg-gray-50 dark:bg-terminal-card">
+                        <div class="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-terminal-elevated border-b border-gray-200 dark:border-terminal-border">
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                            <span class="flex-1 text-center font-mono text-[11px] text-terminal-dim dark:text-terminal-dim">navigate.sh</span>
+                        </div>
+                        <div class="p-5 flex flex-col gap-3">
+                            <a href="{{ route('projects.index') }}"
+                                class="w-full flex items-center justify-center gap-2 px-5 py-3 font-mono text-sm font-medium no-underline rounded-md bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 text-white transition-all hover:shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+                                ./ver_proyectos.sh
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                            </a>
+                            <a href="{{ route('posts.index') }}"
+                                class="w-full flex items-center justify-center gap-2 px-5 py-3 font-mono text-sm font-medium no-underline rounded-md text-terminal-muted dark:text-terminal-muted bg-transparent border border-terminal-border dark:border-terminal-border hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-all">
+                                cat blog/
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                            </a>
+                        </div>
                     </div>
-                    <div class="terminal-line">
-                        <span class="text-terminal-dim dark:text-terminal-dim italic"># about.sh - Quién soy</span>
-                    </div>
-                    <div class="terminal-line">&nbsp;</div>
-                    <div class="terminal-line">
-                        <span class="text-primary-600 dark:text-primary-500">$</span> <span class="text-cyan-600 dark:text-cyan-400">echo</span> <span class="text-primary-600 dark:text-primary-400">"Hola, soy <span class="text-primary-600 dark:text-primary-500 font-semibold">Adrian Vega</span>"</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="text-terminal-muted dark:text-terminal-muted">Hola, soy Adrian Vega</span>
-                    </div>
-                    <div class="terminal-line">&nbsp;</div>
-                    <div class="terminal-line">
-                        <span class="text-primary-600 dark:text-primary-500">$</span> <span class="text-cyan-600 dark:text-cyan-400">cat</span> <span class="text-amber-600 dark:text-amber-400">--role</span> <span class="text-primary-600 dark:text-primary-400">"Full Stack Developer"</span> <span class="text-amber-600 dark:text-amber-400">--focus</span> <span class="text-primary-600 dark:text-primary-400">"TypeScript & IA"</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="text-terminal-muted dark:text-terminal-muted">Desarrollador backend con base en PHP, en transición activa hacia TypeScript y herramientas de IA. Este sitio es el registro público de ese proceso: decisiones, aprendizajes y proyectos en tiempo real.</span>
-                    </div>
-                    <div class="terminal-line">&nbsp;</div>
-                    <div class="terminal-line">
-                        <span class="text-primary-600 dark:text-primary-500">$</span> <span class="text-cyan-600 dark:text-cyan-400">ls</span> <span class="text-amber-600 dark:text-amber-400">./stack/</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Hero Actions -->
-            <div class="max-w-3xl mt-8">
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <a href="{{ route('projects.index') }}"
-                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-mono text-sm font-medium no-underline rounded-md bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 text-white transition-colors">
-                        ./ver_proyectos.sh
-                    </a>
-                    <a href="{{ route('posts.index') }}"
-                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-mono text-sm font-medium no-underline rounded-md text-terminal-muted dark:text-terminal-muted bg-transparent border border-terminal-border dark:border-terminal-border hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
-                        cat blog/
-                    </a>
-                </div>
-            </div>
+                    <!-- Stats mini-terminal -->
+                    <div class="rounded-lg border border-gray-200 dark:border-terminal-border overflow-hidden bg-gray-50 dark:bg-terminal-card">
+                        <div class="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-terminal-elevated border-b border-gray-200 dark:border-terminal-border">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                            <span class="flex-1 text-center font-mono text-[11px] text-terminal-dim dark:text-terminal-dim">stats.sh</span>
+                        </div>
+                        <div class="p-5 font-mono text-xs space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-terminal-muted dark:text-terminal-muted">projects:</span>
+                                <span class="text-primary-600 dark:text-primary-500 font-semibold">{{ $projects->count() }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-terminal-muted dark:text-terminal-muted">blog_posts:</span>
+                                <span class="text-primary-600 dark:text-primary-500 font-semibold">{{ $recentPosts->count() }}+</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-terminal-muted dark:text-terminal-muted">stack:</span>
+                                <span class="text-amber-600 dark:text-amber-400 font-semibold">6 tools</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-terminal-muted dark:text-terminal-muted">status:</span>
+                                <span class="text-green-500 font-semibold flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>online
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Tech Stack -->
-            <div class="max-w-3xl mt-12 pt-8 border-t border-gray-200 dark:border-terminal-border">
-                <p class="font-mono text-[11px] text-terminal-dim dark:text-terminal-dim uppercase tracking-wider mb-3">Stack tecnológico</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-gray-50 dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">laravel</span>
-                    <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-gray-50 dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">vue.js</span>
-                    <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-gray-50 dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">python</span>
-                    <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-gray-50 dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">tensorflow</span>
-                    <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-gray-50 dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">arduino</span>
-                    <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-gray-50 dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">docker</span>
+                    <!-- Tech Stack mini-terminal -->
+                    <div class="rounded-lg border border-gray-200 dark:border-terminal-border overflow-hidden bg-gray-50 dark:bg-terminal-card flex-1">
+                        <div class="flex items-center gap-2 px-4 py-3 bg-gray-100 dark:bg-terminal-elevated border-b border-gray-200 dark:border-terminal-border">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                            <span class="flex-1 text-center font-mono text-[11px] text-terminal-dim dark:text-terminal-dim">ls ./stack/</span>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-all cursor-default">laravel</span>
+                                <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-all cursor-default">vue.js</span>
+                                <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-all cursor-default">python</span>
+                                <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-all cursor-default">tensorflow</span>
+                                <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-all cursor-default">arduino</span>
+                                <span class="px-3 py-1.5 font-mono text-xs rounded border border-terminal-border dark:border-terminal-border text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-elevated hover:border-primary-500 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-500 transition-all cursor-default">docker</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
