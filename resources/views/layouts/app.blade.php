@@ -60,7 +60,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-white dark:bg-terminal-bg text-gray-900 dark:text-gray-100 terminal-scanlines" x-data="{ theme: localStorage.getItem('theme') || 'dark' }">
+<body class="font-sans antialiased bg-white dark:bg-terminal-bg text-gray-900 dark:text-gray-100 terminal-scanlines" x-data="{ theme: localStorage.getItem('theme') || 'dark', mobileMenuOpen: false }">
     <div class="min-h-screen flex flex-col">
         <!-- Navigation -->
         <nav class="sticky top-0 z-50 bg-white/95 dark:bg-terminal-bg/95 backdrop-blur-md border-b border-gray-200 dark:border-terminal-border">
@@ -149,7 +149,7 @@
 
                     <!-- Mobile menu button -->
                     <div class="md:hidden flex items-center gap-2">
-                        <button
+                        <!-- <button
                             @click="
                                 theme = theme === 'dark' ? 'light' : 'dark';
                                 localStorage.setItem('theme', theme);
@@ -162,12 +162,12 @@
                             class="px-2 py-1 text-xs font-mono rounded border transition-colors bg-transparent text-terminal-muted dark:text-terminal-muted border-terminal-border dark:border-terminal-border hover:border-primary-500 dark:hover:border-primary-500">
                             <span x-show="theme === 'dark'">dark</span>
                             <span x-show="theme === 'light'" style="display:none;">light</span>
-                        </button>
+                        </button> -->
 
-                        <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400" x-data="{ mobileMenuOpen: false }">
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" style="display: none;" />
+                                <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
@@ -182,9 +182,7 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0"
                 x-transition:leave-end="opacity-0 -translate-y-1"
-                class="md:hidden border-t border-gray-200 dark:border-terminal-border font-mono"
-                style="display: none;"
-                x-data="{ mobileMenuOpen: false }">
+                class="md:hidden border-t border-gray-200 dark:border-terminal-border font-mono">
                 <div class="px-4 py-3 space-y-3">
                     <a href="{{ route('home') }}" class="block text-xs no-underline text-terminal-muted dark:text-terminal-muted hover:text-primary-600 dark:hover:text-primary-500">
                         ~/inicio
