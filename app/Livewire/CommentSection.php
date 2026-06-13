@@ -15,10 +15,21 @@ class CommentSection extends Component
     public $editingCommentId = null;
     public $editingContent = '';
     public $replyingToCommentId = null;
+    public $authorName = '';
+    public $authorEmail = '';
 
-    protected $rules = [
-        'comment' => 'required|string|max:1000|min:3',
-    ];
+    protected function rules()
+    {
+        $rules = [
+            'comment' => 'required|string|max:1000|min:3',
+        ];
+
+        if (!Auth::check()) {
+            $rules['authorName'] = 'required|string|max:50|min:2';
+        }
+
+        return $rules;
+    }
 
     protected $messages = [
         'comment.required' => 'El comentario no puede estar vacío.',
@@ -29,23 +40,47 @@ class CommentSection extends Component
     public function mount(Post $post)
     {
         $this->post = $post;
+
+        if (!Auth::check()) {
+            $this->authorName = $this->generateNickname();
+        }
+    }
+
+    protected function generateNickname(): string
+    {
+        $length = random_int(5, 8);
+        $numDigits = random_int(1, min(3, $length - 1));
+        $numLetters = $length - $numDigits;
+
+        $nickname = '';
+        for ($i = 0; $i < $numLetters; $i++) {
+            $nickname .= chr(random_int(97, 122));
+        }
+        for ($i = 0; $i < $numDigits; $i++) {
+            $nickname .= random_int(0, 9);
+        }
+
+        return $nickname;
     }
 
     public function submitComment()
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
         $this->validate();
 
-        Comment::create([
+        $data = [
             'post_id' => $this->post->id,
-            'user_id' => Auth::id(),
             'content' => $this->comment,
             'parent_id' => $this->parentId,
             'is_approved' => true,
-        ]);
+        ];
+
+        if (Auth::check()) {
+            $data['user_id'] = Auth::id();
+        } else {
+            $data['author_name'] = $this->authorName;
+        }
+
+        Comment::create($data);
 
         $this->comment = '';
         $this->parentId = null;
@@ -58,10 +93,6 @@ class CommentSection extends Component
 
     public function replyTo($commentId)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
         $this->replyingToCommentId = $commentId;
         $this->parentId = $commentId;
         $this->comment = '';

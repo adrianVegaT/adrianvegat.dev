@@ -35,7 +35,7 @@ Actualmente los comentarios en el blog están limitados a usuarios autenticados.
 - **Framework**: Laravel + Livewire (componente `CommentSection` full-page en `@livewire`)
 - **Auth**: Socialite (Google OAuth) + login tradicional. Se mantiene para editar/borrar comentarios propios.
 - **Flujo anónimo**: visitante escribe comentario → `submitComment()` valida sin `Auth::check()` → guarda `author_name` (con nickname pre-llenado si no lo cambió) + `user_id = null`
-- **Nickname pre-llenado**: se genera aleatoriamente con el patrón `Adjetivo + Sustantivo + Número` (ej. "CuriosoMapache42") usando arrays predefinidos. Se asigna al montar el componente si el usuario no está autenticado y los arrays de palabras están en español para mantener coherencia con el blog.
+- **Nickname pre-llenado**: se genera aleatoriamente combinando letras (a-z) seguidas de números (0-9), entre 5 y 8 caracteres totales (ej. "kxrt93", "abmzpq12"). Sin arrays predefinidos, puramente aleatorio. La generación está aislada en un método propio del componente para facilitar cambios futuros.
 - **Avatar anónimo**: SVG inline de un icono de usuario genérico (círculo con inicial), generado desde el modelo.
 - **Edición/eliminación**: solo para usuarios autenticados (dueño del comentario o admin). Los comentarios anónimos no se pueden editar ni eliminar desde el frontend público.
 - **Seguridad**: `submitComment()` aplica rate limiting implícito vía validación de Livewire. El campo `content` sigue con validación `required|string|max:1000|min:3`.
@@ -60,12 +60,12 @@ Actualmente los comentarios en el blog están limitados a usuarios autenticados.
 
 ### Fase 1: Base de datos y modelo
 
-- [ ] 1.1 Crear migración `2026_06_13_000000_allow_anonymous_comments.php`:
+- [x] 1.1 Crear migración `2026_06_13_174306_allow_anonymous_comments.php`:
   - `user_id` → `nullable()->change()`
   - Agregar `author_name` (string, nullable) después de `user_id`
   - Agregar `author_email` (string, nullable) después de `author_name` (reservado para futuro, no se expone en UI)
-- [ ] 1.2 Correr `php artisan migrate` y verificar que la tabla `comments` se alteró correctamente
-- [ ] 1.3 Actualizar `Comment` model:
+- [x] 1.2 Correr `php artisan migrate` y verificar que la tabla `comments` se alteró correctamente
+- [x] 1.3 Actualizar `Comment` model:
   - Agregar `author_name` y `author_email` al `$fillable`
   - Agregar accessor `displayNameAttribute`: si `user` existe → `$this->user->name`, sino → `$this->author_name`
   - Agregar accessor `avatarUrlAttribute`: si `user` existe → `$this->user->avatar_url`, sino → asset para avatar SVG por defecto
@@ -74,17 +74,17 @@ Actualmente los comentarios en el blog están limitados a usuarios autenticados.
 
 ### Fase 2: Livewire Component
 
-- [ ] 2.1 Agregar propiedades públicas a `CommentSection`:
+- [~] 2.1 Agregar propiedades públicas a `CommentSection`:
   - `$authorName = ''` — nombre del comentarista anónimo
   - `$authorEmail = ''` — reservado, no se muestra en UI
-- [ ] 2.2 Modificar `mount()` para pre-llenar `$authorName` con nickname aleatorio cuando `!Auth::check()`
-- [ ] 2.3 Modificar `submitComment()`:
+- [~] 2.2 Modificar `mount()` para pre-llenar `$authorName` con nickname aleatorio cuando `!Auth::check()`
+- [~] 2.3 Modificar `submitComment()`:
   - Quitar `Auth::check()` guard inicial
   - Si `Auth::check()` → guardar `user_id = Auth::id()`
   - Si no → validar que `author_name` tenga valor (el pre-llenado garantiza esto), guardar `user_id = null` + `author_name`
-- [ ] 2.4 Modificar `replyTo()`: quitar `Auth::check()` guard
-- [ ] 2.5 Mantener `editComment()`, `updateComment()`, `deleteComment()` con auth checks existentes
-- [ ] 2.6 Actualizar reglas de validación: agregar `author_name` condicional (required cuando `!Auth::check()`)
+- [~] 2.4 Modificar `replyTo()`: quitar `Auth::check()` guard
+- [~] 2.5 Mantener `editComment()`, `updateComment()`, `deleteComment()` con auth checks existentes
+- [~] 2.6 Actualizar reglas de validación: convertir `$rules` en método `rules()` con validación condicional de `authorName`
 
 ### Fase 3: Vista pública (comment-section)
 
@@ -129,7 +129,7 @@ Actualmente los comentarios en el blog están limitados a usuarios autenticados.
 ## Decisiones tomadas
 
 - **Solo nombre, sin email**: el campo `author_email` se crea en la migración para uso futuro, pero la UI actual no lo expone. KISS.
-- **Nickname pre-llenado**: arrays de adjetivos y sustantivos en español hardcodeados en el componente Livewire. No requiere dependencia externa ni package de generación de nombres.
+- **Nickname pre-llenado**: combinación aleatoria de letras (a-z) + números (0-9), entre 5 y 8 caracteres totales. Generado por un método aislado (`generateNickname()`) en el componente Livewire, sin arrays predefinidos. Permite cambiar la estrategia de generación sin tocar el resto del código.
 - **Accessors en el modelo**: `displayNameAttribute` y `avatarUrlAttribute` centralizan la lógica de "qué mostrar". Las vistas nunca acceden a `$comment->user` directamente, evitando errores de null.
 - **Anónimos no editan ni borran**: coherencia con el sistema actual donde solo el dueño (autenticado) puede gestionar su comentario. Un anónimo no tiene credenciales para probar ownership.
 - **`user_id` nullable en vez de crear tabla aparte**: más simple que tener una tabla `anonymous_commenters`. Mantiene una sola relación polimórfica implícita (user_id = null → anónimo).
