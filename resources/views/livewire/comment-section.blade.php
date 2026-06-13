@@ -361,6 +361,74 @@
                         </form>
                     </div>
                     @endif
+
+                    <!-- Sub-replies (level 3, no reply button) -->
+                    @if($reply->replies->count() > 0)
+                    <div class="mt-4 ml-4 space-y-3 border-l-2 border-gray-300 dark:border-terminal-border-bright pl-4">
+                        @foreach($reply->replies as $subReply)
+                        <div class="bg-white dark:bg-terminal-card rounded-lg p-3">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex items-center space-x-2">
+                                    <img src="{{ $subReply->avatar_url }}" alt="{{ $subReply->display_name }}" class="w-6 h-6 rounded-full">
+                                    <div>
+                                        <p class="font-medium text-gray-900 dark:text-white text-xs">{{ $subReply->display_name }}</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                                            {{ $subReply->created_at->diffForHumans() }}
+                                            @if($subReply->created_at != $subReply->updated_at)
+                                            <span>(editado)</span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+
+                                @auth
+                                @if($subReply->user_id === auth()->id() || auth()->user()->hasRole('admin'))
+                                <div class="flex items-center space-x-1" x-data="{ open: false }">
+                                    <button @click="open = !open" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                                        </svg>
+                                    </button>
+                                    <div x-show="open" @click.away="open = false" x-transition
+                                        class="absolute right-0 mt-2 w-40 bg-white dark:bg-terminal-card rounded-lg shadow-lg border border-gray-200 dark:border-terminal-border py-1 z-10"
+                                        style="display: none;">
+                                        <button wire:click="editComment({{ $subReply->id }})"
+                                            class="w-full text-left px-3 py-1.5 font-mono text-xs text-terminal-muted dark:text-terminal-muted hover:bg-gray-100 dark:hover:bg-terminal-elevated">
+                                            Editar
+                                        </button>
+                                        <button wire:click="deleteComment({{ $subReply->id }})"
+                                            wire:confirm="¿Estás seguro de eliminar esta respuesta?"
+                                            class="w-full text-left px-3 py-1.5 font-mono text-xs text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-terminal-elevated">
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                                @endif
+                                @endauth
+                            </div>
+
+                            @if($editingCommentId === $subReply->id)
+                            <div class="space-y-2">
+                                <textarea wire:model="editingContent" rows="2"
+                                    class="w-full px-3 py-1.5 font-mono text-xs bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white resize-none"></textarea>
+                                <div class="flex justify-end gap-2">
+                                    <button wire:click="cancelEdit"
+                                        class="px-2.5 py-1 font-mono text-xs text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-card border border-terminal-border dark:border-terminal-border rounded-md hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
+                                        Cancelar
+                                    </button>
+                                    <button wire:click="updateComment"
+                                        class="px-2.5 py-1 font-mono text-xs text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-md transition-colors">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                            @else
+                            <p class="text-gray-700 dark:text-gray-300 text-xs whitespace-pre-wrap">{{ $subReply->content }}</p>
+                            @endif
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
                 </div>
                 @endforeach
             </div>
