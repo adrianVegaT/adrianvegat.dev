@@ -158,10 +158,10 @@
             <div class="space-y-4">
                 @forelse($recentComments as $comment)
                 <div class="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <img src="{{ $comment->user->avatar_url }}" alt="{{ $comment->user->name }}" class="w-8 h-8 rounded-full flex-shrink-0">
+                    <img src="{{ $comment->avatar_url }}" alt="{{ $comment->display_name }}" class="w-8 h-8 rounded-full flex-shrink-0">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $comment->user->name }}</p>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $comment->display_name }}</p>
                             <span class="text-xs text-gray-500 dark:text-gray-400">{{ $comment->created_at->diffForHumans() }}</span>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mt-1">{{ $comment->content }}</p>

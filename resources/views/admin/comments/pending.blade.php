@@ -22,14 +22,14 @@
                 <div class="bg-white dark:bg-gray-900 rounded-xl border-2 border-yellow-200 dark:border-yellow-800 p-6">
                     <div class="flex items-start gap-4">
                         <!-- Avatar -->
-                        <img src="{{ $comment->user->avatar_url }}" alt="{{ $comment->user->name }}" class="w-12 h-12 rounded-full flex-shrink-0">
+                        <img src="{{ $comment->avatar_url }}" alt="{{ $comment->display_name }}" class="w-12 h-12 rounded-full flex-shrink-0">
 
                         <!-- Content -->
                         <div class="flex-1 min-w-0">
                             <!-- Header -->
                             <div class="flex items-start justify-between mb-2">
                                 <div>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $comment->user->name }}</p>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $comment->display_name }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ $comment->created_at->diffForHumans() }}
                                         @if($comment->parent_id)

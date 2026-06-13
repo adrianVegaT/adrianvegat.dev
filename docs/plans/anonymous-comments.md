@@ -88,19 +88,19 @@ Actualmente los comentarios en el blog están limitados a usuarios autenticados.
 
 ### Fase 3: Vista pública (comment-section)
 
-- [~] 3.1 Quitar `@auth`/`@else`/`@endauth` del bloque del formulario. El form se muestra siempre.
-- [~] 3.2 Agregar campo `author_name` visible solo si `@guest`: input text con nickname pre-llenado, label "Nombre"
-- [~] 3.3 Quitar `@auth` del botón "Responder". Mostrar siempre (con `@if($editingCommentId !== $comment->id)`)
-- [~] 3.4 Mantener `@auth` en menús de editar/eliminar (sin cambios)
-- [~] 3.5 Reemplazar `$comment->user->avatar_url` → `$comment->avatar_url` (accessor del modelo)
-- [~] 3.6 Reemplazar `$comment->user->name` → `$comment->display_name` (accessor del modelo)
-- [~] 3.7 Aplicar mismos cambios de `avatar_url`/`display_name` en la sección de replies
+- [x] 3.1 Quitar `@auth`/`@else`/`@endauth` del bloque del formulario. El form se muestra siempre.
+- [x] 3.2 Agregar campo `author_name` visible solo si `@guest`: input text con nickname pre-llenado, label "Nombre"
+- [x] 3.3 Quitar `@auth` del botón "Responder". Mostrar siempre (con `@if($editingCommentId !== $comment->id)`)
+- [x] 3.4 Mantener `@auth` en menús de editar/eliminar (sin cambios)
+- [x] 3.5 Reemplazar `$comment->user->avatar_url` → `$comment->avatar_url` (accessor del modelo)
+- [x] 3.6 Reemplazar `$comment->user->name` → `$comment->display_name` (accessor del modelo)
+- [x] 3.7 Aplicar mismos cambios de `avatar_url`/`display_name` en la sección de replies
 
 ### Fase 4: Vistas admin
 
-- [ ] 4.1 `admin/comments/index.blade.php`: reemplazar `$comment->user->*` → accessors del modelo
-- [ ] 4.2 `admin/comments/pending.blade.php`: mismo reemplazo
-- [ ] 4.3 `admin/dashboard.blade.php`: mismo reemplazo
+- [~] 4.1 `admin/comments/index.blade.php`: reemplazar `$comment->user->*` → accessors del modelo
+- [~] 4.2 `admin/comments/pending.blade.php`: mismo reemplazo
+- [~] 4.3 `admin/dashboard.blade.php`: mismo reemplazo
 
 ### Fase 5: Verificación
 
