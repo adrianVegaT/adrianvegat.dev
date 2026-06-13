@@ -113,6 +113,15 @@ Actualmente los comentarios en el blog están limitados a usuarios autenticados.
 
 ---
 
+### Fase 6: UX — Reply inline en la card del comentario
+
+- [~] 6.1 Formulario principal (arriba): solo visible cuando no se está respondiendo (`!$replyingToCommentId`). Para comentarios de nivel superior.
+- [~] 6.2 Formulario inline dentro de cada card de comentario: visible cuando `$replyingToCommentId === $comment->id`. Incluye textarea de respuesta, banner "Respondiendo a...", botones Cancelar/Enviar, y campo nombre (`@guest`).
+- [~] 6.3 Formulario inline dentro de cada card de reply: mismo patrón para replies (`$replyingToCommentId === $reply->id`). Incluye botón "Responder" adicional en cada reply.
+- [~] 6.4 Verificar: clic en "Responder" muestra textarea inline sin scroll; "Cancelar" lo oculta; submit limpia el formulario correctamente.
+
+---
+
 ## Fuera de alcance
 
 - Email del comentarista anónimo (la columna `author_email` se crea pero no se expone en UI)

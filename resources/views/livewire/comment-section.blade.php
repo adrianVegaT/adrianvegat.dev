@@ -10,22 +10,10 @@
     </div>
     @endif
 
-    <!-- Comment Form -->
+    <!-- Comment Form (top-level only, not replying) -->
+    @if(!$replyingToCommentId)
     <div class="mb-8">
         <form wire:submit.prevent="submitComment" class="space-y-4">
-            @if($replyingToCommentId)
-            <div class="flex items-center justify-between p-3 bg-primary-50 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/20 rounded-lg">
-                <span class="font-mono text-xs text-primary-700 dark:text-primary-400">
-                    Respondiendo a comentario...
-                </span>
-                <button type="button" wire:click="cancelReply" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            @endif
-
             @guest
             <div>
                 <label for="authorName" class="block font-mono text-xs text-terminal-dim dark:text-terminal-dim mb-2">
@@ -46,7 +34,7 @@
 
             <div>
                 <label for="comment" class="block font-mono text-xs text-terminal-dim dark:text-terminal-dim mb-2">
-                    {{ $replyingToCommentId ? 'Tu respuesta' : 'Escribe un comentario' }}
+                    Escribe un comentario
                 </label>
                 <textarea
                     wire:model="comment"
@@ -60,24 +48,17 @@
             </div>
 
             <div class="flex justify-end gap-3">
-                @if($replyingToCommentId)
-                <button
-                    type="button"
-                    wire:click="cancelReply"
-                    class="px-4 py-2 font-mono text-xs text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-card border border-terminal-border dark:border-terminal-border rounded-md hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
-                    Cancelar
-                </button>
-                @endif
                 <button
                     type="submit"
                     class="px-6 py-2 font-mono text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     wire:loading.attr="disabled">
-                    <span wire:loading.remove>{{ $replyingToCommentId ? 'Responder' : 'Comentar' }}</span>
+                    <span wire:loading.remove>Comentar</span>
                     <span wire:loading>Publicando...</span>
                 </button>
             </div>
         </form>
     </div>
+    @endif
 
     <!-- Comments List -->
     <div class="space-y-4">
@@ -169,6 +150,69 @@
             </div>
             @endif
 
+            <!-- Inline Reply Form -->
+            @if($replyingToCommentId === $comment->id)
+            <div class="mt-4 space-y-3">
+                <div class="flex items-center justify-between p-3 bg-primary-50 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/20 rounded-lg">
+                    <span class="font-mono text-xs text-primary-700 dark:text-primary-400">
+                        Respondiendo a {{ $comment->display_name }}...
+                    </span>
+                    <button type="button" wire:click="cancelReply" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <form wire:submit.prevent="submitComment" class="space-y-3">
+                    @guest
+                    <div>
+                        <label for="authorName-reply-{{ $comment->id }}" class="block font-mono text-xs text-terminal-dim dark:text-terminal-dim mb-2">Nombre</label>
+                        <input
+                            wire:model="authorName"
+                            id="authorName-reply-{{ $comment->id }}"
+                            type="text"
+                            maxlength="50"
+                            class="w-full px-4 py-2.5 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-terminal-muted dark:placeholder-terminal-dim"
+                            placeholder="Tu nombre...">
+                        @error('authorName')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    @endguest
+
+                    <div>
+                        <label for="comment-reply-{{ $comment->id }}" class="block font-mono text-xs text-terminal-dim dark:text-terminal-dim mb-2">Tu respuesta</label>
+                        <textarea
+                            wire:model="comment"
+                            id="comment-reply-{{ $comment->id }}"
+                            rows="3"
+                            class="w-full px-4 py-3 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-terminal-muted dark:placeholder-terminal-dim resize-none"
+                            placeholder="Escribe tu respuesta..."></textarea>
+                        @error('comment')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex justify-end gap-3">
+                        <button
+                            type="button"
+                            wire:click="cancelReply"
+                            class="px-4 py-2 font-mono text-xs text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-card border border-terminal-border dark:border-terminal-border rounded-md hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
+                            Cancelar
+                        </button>
+                        <button
+                            type="submit"
+                            class="px-6 py-2 font-mono text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            wire:loading.attr="disabled">
+                            <span wire:loading.remove>Responder</span>
+                            <span wire:loading>Publicando...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            @endif
+
             <!-- Replies -->
             @if($comment->replies->count() > 0)
             <div class="mt-6 ml-8 space-y-4 border-l-2 border-gray-200 dark:border-terminal-border pl-6">
@@ -242,6 +286,80 @@
                     </div>
                     @else
                     <p class="text-gray-700 dark:text-gray-300 text-sm whitespace-pre-wrap">{{ $reply->content }}</p>
+                    @endif
+
+                    <!-- Reply Actions -->
+                    @if($editingCommentId !== $reply->id && !$replyingToCommentId)
+                    <div class="mt-3">
+                        <button
+                            wire:click="replyTo({{ $reply->id }})"
+                            class="font-mono text-xs text-primary-600 dark:text-primary-500 hover:text-primary-700 dark:hover:text-primary-300">
+                            Responder
+                        </button>
+                    </div>
+                    @endif
+
+                    <!-- Inline Reply Form (for replies) -->
+                    @if($replyingToCommentId === $reply->id)
+                    <div class="mt-4 space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-primary-50 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/20 rounded-lg">
+                            <span class="font-mono text-xs text-primary-700 dark:text-primary-400">
+                                Respondiendo a {{ $reply->display_name }}...
+                            </span>
+                            <button type="button" wire:click="cancelReply" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <form wire:submit.prevent="submitComment" class="space-y-3">
+                            @guest
+                            <div>
+                                <label for="authorName-replyto-{{ $reply->id }}" class="block font-mono text-xs text-terminal-dim dark:text-terminal-dim mb-2">Nombre</label>
+                                <input
+                                    wire:model="authorName"
+                                    id="authorName-replyto-{{ $reply->id }}"
+                                    type="text"
+                                    maxlength="50"
+                                    class="w-full px-4 py-2.5 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-terminal-muted dark:placeholder-terminal-dim"
+                                    placeholder="Tu nombre...">
+                                @error('authorName')
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            @endguest
+
+                            <div>
+                                <label for="comment-replyto-{{ $reply->id }}" class="block font-mono text-xs text-terminal-dim dark:text-terminal-dim mb-2">Tu respuesta</label>
+                                <textarea
+                                    wire:model="comment"
+                                    id="comment-replyto-{{ $reply->id }}"
+                                    rows="3"
+                                    class="w-full px-4 py-3 font-mono text-sm bg-white dark:bg-terminal-card border border-gray-300 dark:border-terminal-border rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white placeholder-terminal-muted dark:placeholder-terminal-dim resize-none"
+                                    placeholder="Escribe tu respuesta..."></textarea>
+                                @error('comment')
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="flex justify-end gap-2">
+                                <button
+                                    type="button"
+                                    wire:click="cancelReply"
+                                    class="px-3 py-1.5 font-mono text-xs text-terminal-muted dark:text-terminal-muted bg-white dark:bg-terminal-card border border-terminal-border dark:border-terminal-border rounded-md hover:bg-gray-50 dark:hover:bg-terminal-elevated transition-colors">
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    class="px-4 py-1.5 font-mono text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:hover:bg-primary-500 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    wire:loading.attr="disabled">
+                                    <span wire:loading.remove>Responder</span>
+                                    <span wire:loading>Publicando...</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                     @endif
                 </div>
                 @endforeach
