@@ -98,7 +98,7 @@
         <!-- Post Content -->
         <section class="py-12 bg-white dark:bg-terminal-bg">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="prose prose-lg dark:prose-invert max-w-none prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-terminal-muted prose-a:text-primary-600 dark:prose-a:text-primary-500 prose-strong:text-gray-900 dark:prose-strong:text-white prose-code:text-gray-900 dark:prose-code:text-white prose-pre:bg-gray-900 dark:prose-pre:bg-terminal-card">
+                <div class="prose prose-lg dark:prose-invert max-w-none prose-a:text-primary-600 dark:prose-a:text-primary-500 prose-pre:bg-gray-900 dark:prose-pre:bg-terminal-card">
                     {!! $post->content !!}
                 </div>
 
