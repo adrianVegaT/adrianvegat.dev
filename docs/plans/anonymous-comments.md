@@ -74,30 +74,27 @@ Actualmente los comentarios en el blog están limitados a usuarios autenticados.
 
 ### Fase 2: Livewire Component
 
-- [~] 2.1 Agregar propiedades públicas a `CommentSection`:
+- [x] 2.1 Agregar propiedades públicas a `CommentSection`:
   - `$authorName = ''` — nombre del comentarista anónimo
   - `$authorEmail = ''` — reservado, no se muestra en UI
-- [~] 2.2 Modificar `mount()` para pre-llenar `$authorName` con nickname aleatorio cuando `!Auth::check()`
-- [~] 2.3 Modificar `submitComment()`:
+- [x] 2.2 Modificar `mount()` para pre-llenar `$authorName` con nickname aleatorio cuando `!Auth::check()`
+- [x] 2.3 Modificar `submitComment()`:
   - Quitar `Auth::check()` guard inicial
   - Si `Auth::check()` → guardar `user_id = Auth::id()`
   - Si no → validar que `author_name` tenga valor (el pre-llenado garantiza esto), guardar `user_id = null` + `author_name`
-- [~] 2.4 Modificar `replyTo()`: quitar `Auth::check()` guard
-- [~] 2.5 Mantener `editComment()`, `updateComment()`, `deleteComment()` con auth checks existentes
-- [~] 2.6 Actualizar reglas de validación: convertir `$rules` en método `rules()` con validación condicional de `authorName`
+- [x] 2.4 Modificar `replyTo()`: quitar `Auth::check()` guard
+- [x] 2.5 Mantener `editComment()`, `updateComment()`, `deleteComment()` con auth checks existentes
+- [x] 2.6 Actualizar reglas de validación: convertir `$rules` en método `rules()` con validación condicional de `authorName`
 
 ### Fase 3: Vista pública (comment-section)
 
-- [ ] 3.1 Quitar `@auth`/`@else`/`@endauth` del bloque del formulario (líneas 14-97). El form se muestra siempre.
-- [ ] 3.2 Agregar campo `author_name` visible solo si `!Auth::check()`:
-  - Input text con el nickname pre-llenado (editable)
-  - Label: "Nombre"
-  - Placeholder: "Tu nombre..."
-- [ ] 3.3 Quitar `@auth` del botón "Responder" (líneas 179-189). Mostrar siempre.
-- [ ] 3.4 Mantener `@auth` en menús de editar/eliminar (líneas 118-146 y 211-239)
-- [ ] 3.5 Reemplazar `$comment->user->avatar_url` → `$comment->avatar_url` (usa el accessor del modelo)
-- [ ] 3.6 Reemplazar `$comment->user->name` → `$comment->display_name` (usa el accessor del modelo)
-- [ ] 3.7 Aplicar mismos cambios de display_name/avatar_url en la sección de replies
+- [~] 3.1 Quitar `@auth`/`@else`/`@endauth` del bloque del formulario. El form se muestra siempre.
+- [~] 3.2 Agregar campo `author_name` visible solo si `@guest`: input text con nickname pre-llenado, label "Nombre"
+- [~] 3.3 Quitar `@auth` del botón "Responder". Mostrar siempre (con `@if($editingCommentId !== $comment->id)`)
+- [~] 3.4 Mantener `@auth` en menús de editar/eliminar (sin cambios)
+- [~] 3.5 Reemplazar `$comment->user->avatar_url` → `$comment->avatar_url` (accessor del modelo)
+- [~] 3.6 Reemplazar `$comment->user->name` → `$comment->display_name` (accessor del modelo)
+- [~] 3.7 Aplicar mismos cambios de `avatar_url`/`display_name` en la sección de replies
 
 ### Fase 4: Vistas admin
 
