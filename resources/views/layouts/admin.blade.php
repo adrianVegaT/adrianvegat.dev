@@ -17,12 +17,7 @@
     <!-- Theme Script -->
     <script>
         function initTheme() {
-            const theme = localStorage.getItem('theme') || 'dark';
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            document.documentElement.classList.add('dark');
         }
         initTheme();
     </script>
@@ -33,7 +28,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100" x-data="{ theme: localStorage.getItem('theme') || 'dark', sidebarOpen: true }">
+<body class="font-sans antialiased bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100" x-data="{ theme: 'dark', sidebarOpen: true }">
     <div class="min-h-screen">
         <!-- Sidebar -->
         <aside
@@ -142,6 +137,7 @@
 
                     <div class="flex items-center space-x-4 ml-auto">
                         <!-- Theme Switcher -->
+                        <!--
                         <button
                             @click="
                                 theme = theme === 'dark' ? 'light' : 'dark';
@@ -160,6 +156,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                             </svg>
                         </button>
+                        -->
 
                         <!-- User Info -->
                         <div class="flex items-center space-x-3">
